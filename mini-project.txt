@@ -1,0 +1,86 @@
+1 :
+    SELECT * FROM users
+
+2 :
+    SELECT * FROM users 
+    ORDER BY last_name
+
+3 :
+    SELECT * FROM users 
+    ORDER BY registration_date DESC
+    Limit 1
+
+4 :
+    SELECT * FROM users
+    WHERE birthdate LIKE "%-02-%" // WHERE colonne LIKE "" permet d'effectuer une recherche sur un modèle particulier. % dans la chaine de caractère remplace un ou plusieurs caractères
+
+5 :
+    SELECT COUNT(*) FROM users :: La fonction COUNT() compte le nombre d'items, il peut être appliqué à une colonne seule au lieu de *.
+    
+6 :
+    SELECT users.first_name, users.last_name, addresses.city
+    FROM users JOIN addresses
+    ON users.address_id = addresses.id
+7 :
+    SELECT users.* // Permet d'afficher toutes les données de users sans afficher addresses
+    FROM addresses JOIN users
+    ON addresses.user_id = users.id
+    WHERE addresses.number IS NULL  // IS NULL est a utilisé pour les résultats null
+
+8 :
+    SELECT * FROM products
+    WHERE price > 1000
+
+9 :
+    SELECT products.*, pictures.url
+    FROM products JOIN pictures
+    ON pictures.product_id = products.id
+
+10 :
+    SELECT products.*, categories.title
+    FROM products_categories  JOIN categories
+    ON products_categories.category_id = categories.id 
+    JOIN products
+    ON products_categories.product_id = products.id
+    WHERE categories.title = "voyage"
+
+11 :
+    SELECT users.*, COUNT(*) AS nbr_orders
+    FROM products_orders JOIN orders
+    ON products_orders.order_id = orders.id 
+    JOIN users
+    ON orders.user_id = users.id
+    
+    GROUP BY user_id
+    HAVING COUNT(nbr_orders) > 9
+    ORDER BY nbr_orders
+
+12 :
+    SELECT orders.*, users.last_name
+    FROM orders JOIN users
+    ON orders.user_id = users.id
+    WHERE registration_date = ( 
+        SELECT registration_date 
+        FROM users 
+        ORDER BY registration_date 
+        LIMIT 1
+        )
+        
+13 :
+    SELECT name, description, price FROM products
+    
+14 :
+    SELECT name, description, price FROM products
+    WHERE price <= 42
+    
+15 :
+    SELECT city, postal_code, number, street FROM addresses
+    
+16 :
+    SELECT city, postal_code, number, street FROM addresses
+    WHERE city LIKE "A%"
+    
+21 :
+    
+    
+    
